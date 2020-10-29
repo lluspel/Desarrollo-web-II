@@ -1,0 +1,43 @@
+{% extends "bootstrap/mybase_online.html" %}
+
+{% block title %} CSV competición {% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+              <div class="table-responsive">
+                <table id="myTable" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Nombre del usuario</th>
+                      <th>Código de la competición</th>
+                      <th>Nombre del fichero</th>
+                      <th>Fecha de creación</th>
+                    </tr>
+                  </thead>
+
+
+                  <tbody>
+                    {% for row in rows %}
+                        {% if 'private'  not in  row.filename %}
+                            <tr>
+                                <td>{{ row.id }}</td>
+                                <td>{{ row.username }}</td>
+                                <td><a href="/files/{{ row.competioncode }}">{{ row.competioncode }}</a></td>
+                                    <td><a href="/static/uploads/{{ row.filename  }}">{{ row.filename }}</a></td>
+                                <td>{{ row.creation_date }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock content %}

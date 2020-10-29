@@ -1,0 +1,39 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('.static',filename='dashboard.css')}}">
+{% endblock styles %}
+
+{% block navbar %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('dashboard')}}">Servidor Web</a>
+        </div>
+      </div>
+    </nav>
+
+
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="{{'active' if page == 'dashboard'}}"><a href="{{ url_for('dashboard')}}">Inicio <span class="sr-only">(current)</span></a></li>
+            <li class="{{'active' if page == 'profile'}}"><a href="{{ url_for('profile')}}">Perfil</a></li>
+            {% if current_user.role != "1" %}
+            <li class="{{'active' if page == 'upload'}}"><a href="{{ url_for('upload')}}">Subir documento</a></li>
+            <li class="{{'active' if page == 'competition'}}"><a href="{{ url_for('competition')}}">Competiciones</a></li>
+            {% if current_user.role != "2" %}
+            <li class="{{'active' if page == 'createuser'}}"><a href="{{ url_for('createuser')}}">Usuarios</a></li>
+            {% endif %}
+            {% endif %}
+            <li><a href="{{ url_for('logout')}}">Log Out</a></li>
+          </ul>
+        </div>
+{% endblock navbar %}

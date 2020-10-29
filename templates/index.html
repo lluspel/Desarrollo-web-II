@@ -1,0 +1,86 @@
+{% extends "bootstrap/mybase_offline.html" %}
+
+{% block title %} Web Servidor {% endblock title %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('.static',filename='starter-template.css')}}">
+{% endblock styles %}
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Competiciones</h1>
+
+
+            {% for row in rows %}
+            <div class="card text-white bg-dark mb-3">
+              <div class="card-body">
+                <h3 class="card-title" style="text-align:center;"><b>{{ row.title }}</b></h3>
+                  <p class="card-text"><b>Descripción:</b>{{ row.description }} </p>
+                  <p class="card-text"><b>Creador:</b> {{ row.username }} </p>
+                  <p class="card-text"><b>Fecha:</b> {{ row.creation_date }}</p>
+                  <p class="card-text"><b>Ranking accuracy:</b> </p>
+                    <div class="container-fluid">
+                      <div class="row">
+                          <div class="table-responsive">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Nombre del usuario</th>
+                                  <th>Mejor score del usuario</th>
+                                </tr>
+                              </thead>
+
+
+                              <tbody>
+                                {% for prediction in predictions %}
+                                    {% if prediction.metrica == "accuracy" and prediction.competioncode == row.competioncode %}
+                                        <tr>
+                                            <td>{{ prediction.username }}</td>
+                                            <td>{{ prediction.score}}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                      </div>
+                    </div>
+                 <p class="card-text"><b>Ranking gini:</b> </p>
+                    <div class="container-fluid">
+                      <div class="row">
+                          <div class="table-responsive">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Nombre del usuario</th>
+                                  <th>Mejor score del usuario</th>
+                                </tr>
+                              </thead>
+
+
+                              <tbody>
+                                {% for prediction in predictions %}
+                                    {% if prediction.metrica == "gini" and prediction.competioncode == row.competioncode %}
+                                        <tr>
+                                            <td>{{ prediction.username }}</td>
+                                            <td>{{ prediction.score}}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+            {% endfor %}
+
+        </div>
+      </div>
+    </div>
+{% endblock content %}

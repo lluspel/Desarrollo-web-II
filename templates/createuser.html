@@ -1,0 +1,68 @@
+{% extends "bootstrap/mybase_online.html" %}
+
+{% block title %} Editar Usuarios {% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+    	    <form class="form-signin" method="POST" action="{{url_for('createuser')}}">
+        		<h2 class="form-signin-heading">Regístrate</h2>
+                {{ form.hidden_tag() }}
+                {{ wtf.form_field(form.username) }}
+                {{ wtf.form_field(form.email) }}
+                {{ wtf.form_field(form.password) }}
+                {{ wtf.form_field(form.role) }}
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+            </form>
+
+            <br><br>
+
+            <div class="table-responsive">
+            <table id="myTable" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre del usuario</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Editar</th>
+                  <th>Borrar</th>
+                </tr>
+              </thead>
+
+
+              <tbody>
+                {% for row in rows %}
+                {% if current_user.role == "-1" %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{{ row.role }}</td>
+                    <td><a href="/edituser/{{ row.id }}">Editar</a></td>
+                    <td><a href="/deleteuser/{{ row.id }}">Borrar</a></td>
+                </tr>
+                {% endif %}
+                {% if current_user.role != "-1" %}
+                {% if row.role != "-1" %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{{ row.role }}</td>
+                    <td><a href="/edituser/{{ row.id }}">Editar</a></td>
+                    <td><a href="/deleteuser/{{ row.id }}">Borrar</a></td>
+                </tr>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+{% endblock content %}

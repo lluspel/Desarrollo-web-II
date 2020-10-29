@@ -1,0 +1,71 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+{%- block html %}
+  <head>
+    {%- block head %}
+    <title>{% block title %}{{title|default}}{% endblock title %}</title>
+
+    {%- block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%- endblock metas %}
+
+    {%- block styles %}
+    <!-- Bootstrap -->
+    <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+    {%- endblock styles %}
+    {%- endblock head %}
+  </head>
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+    {% block navbar %}
+    {%- endblock navbar %}
+
+    {% block alert %}
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="container">
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                {% endfor %}
+                </div>
+          </div>
+      </div>
+    {% endblock alert %}
+
+    {% block content -%}
+    {%- endblock content %}
+
+    {% block scripts %}
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#myTable').DataTable({
+			    "order": [[ 0, "desc" ]],
+			    "colReorder": true,
+				"aLengthMenu": [
+					[10, 25, 100, -1],
+					[10, 25, 100, "All"] // change per page values here
+				],
+				// set the initial value
+				"iDisplayLength": 10,
+				"dom": '<"row"<"col-sm-3"l><"col-sm-3"f><"col-sm-2"i><"col-sm-4"p>>',
+				"initComplete": function(settings, json) {
+					document.getElementById("myTable_info").style.paddingTop = 0;
+				}
+			});
+		} );
+    </script>
+
+    {{ moment.include_moment() }}
+    {%- endblock scripts %}
+    {%- endblock body %}
+  </body>
+{%- endblock html %}
+</html>
+{% endblock doc -%}

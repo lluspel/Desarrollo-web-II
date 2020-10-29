@@ -1,0 +1,29 @@
+{% extends "bootstrap/mybase_online.html" %}
+
+{% block title %} Web Servidor {% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Bienvenido {{current_user.username}}. Competiciones actuales</h1>
+
+            {% for row in rows %}
+            <div class="card text-white bg-dark mb-3">
+              <div class="card-body">
+                  <h3 class="card-title" style="text-align:center;"><b>{{ row.title }}</b></h3>
+                  <p class="card-text"><b>Descripción:</b>{{ row.description }} </p>
+                  <p class="card-text"><b>Creador:</b>{{ row.username }} </p>
+                  <p class="card-text"><b>Fecha:</b>{{ row.creation_date }}</p>
+                  <p class="card-text"><b>Ranking:</b><a href="/ranking/{{ row.competioncode }}"> {{ row.competioncode }}</a></p>
+                  <p class="card-text"><b>Archivo para competir:</b><a href="/code/{{ row.competioncode }}.py" download>{{ row.competioncode }}.py</a></p>
+              </div>
+            </div>
+            {% endfor %}
+
+        </div>
+      </div>
+    </div>
+{% endblock content %}

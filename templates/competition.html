@@ -1,0 +1,50 @@
+{% extends "bootstrap/mybase_online.html" %}
+
+{% block title %} Mis competiciones {% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="table-responsive">
+            <table id="myTable" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre del usuario</th>
+                  <th>Fichero de la competición</th>
+                  <th>Ranking de la competición</th>
+                  <th>Código python para competir</th>
+                  <th>Fecha de creación</th>
+                  <th>Editar</th>
+                    {% if current_user.role != "0" %}
+                  <th>Borrar</th>
+                    {% endif %}
+                </tr>
+              </thead>
+
+
+              <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.username }}</td>
+                    <td><a href="/files/{{ row.competioncode }}">Files :{{ row.competioncode }}</a></td>
+                    <td><a href="/ranking/{{ row.competioncode }}"> Ranking: {{ row.competioncode }}</a></td>
+                    <td><a href="/code/{{ row.competioncode }}.py" download>{{ row.competioncode }}.py</a></td>
+                    <td>{{ row.creation_date }}</td>
+                    <td><a href="/edit/{{ row.competioncode }}">Editar</a></td>
+                    {% if current_user.role != "0" %}
+                    <td><a href="/delete/{{ row.competioncode }}">Borrar</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

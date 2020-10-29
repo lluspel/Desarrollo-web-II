@@ -1,0 +1,86 @@
+{% extends "bootstrap/mybase_online.html" %}
+
+{% block title %} Subir Documento {% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="container">
+                <form action="{{url_for('upload')}}" method="POST" enctype="multipart/form-data">
+                    {{ wtf.form_field(form.title) }}
+                    {{ wtf.form_field(form.description) }}
+                    <div id="box">
+        		    <div id="drop-mask"></div>
+                        <h5>Por favor subir 2 ficheros. El fichero de entrenamiento y el fichero de test: </h5>
+        				<input type="file" name="file" id="fileInput" class="button2" accept="" capture ><br><br>
+                        <input type="submit" value="Subir" class="button3">
+                    </div>
+                </form>
+            </div>
+
+        <br>
+        <br>
+        </div>
+      </div>
+    </div>
+
+<script>
+
+    var drag_over = function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+		$('#box').addClass('hover');
+		$('#drop-mask').show();
+    };
+
+    var drag_leave = function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+		$('#box').removeClass('hover');
+		$('#drop-mask').hide();
+    };
+
+
+	var drag_drop = function(e){
+        e.stopPropagation();
+        e.preventDefault();
+		$('#box').removeClass('hover');
+		$('#drop-mask').hide();
+        fileInput.files = e.dataTransfer.files;
+	};
+
+    var overArea = document.getElementById('box');
+    var dropMask = document.getElementById('drop-mask');
+
+	overArea.addEventListener('dragover', drag_over, false);
+	dropMask.addEventListener('dragleave', drag_leave, false);
+    dropMask.addEventListener('drop', drag_drop, false);
+</script>
+
+<style>
+#box {
+    width:600px;
+    height:180px;
+    border:10px dashed lightgray;
+    margin:5px;
+}
+
+#box.hover {
+    background:#eee;
+    border:10px dashed #F00;
+}
+
+#drop-mask {
+    position:absolute;
+    width:610px;
+    height:190px;
+    z-index:999999;
+    display:none;
+    margin:0px;
+}
+
+</style>
+
+{% endblock content %}

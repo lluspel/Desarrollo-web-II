@@ -1,0 +1,93 @@
+{% extends "bootstrap/mybase_online.html" %}
+
+{% block title %} Ranking de {{ competioncode }} {% endblock title %}
+
+
+{% block content %}
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h2 class="page-header">Ranking métrica accuracy de {{ competioncode }}</h2>
+              <div class="table-responsive">
+                <table id="myTable" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Nombre del usuario</th>
+                      <th>Mejor score del usuario</th>
+                    </tr>
+                  </thead>
+
+
+                  <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td>{{ row.username }}</td>
+                        <td>{{ row.best_score}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+
+    var drag_over = function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+		$('#box').addClass('hover');
+		$('#drop-mask').show();
+    };
+
+    var drag_leave = function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+		$('#box').removeClass('hover');
+		$('#drop-mask').hide();
+    };
+
+
+	var drag_drop = function(e){
+        e.stopPropagation();
+        e.preventDefault();
+		$('#box').removeClass('hover');
+		$('#drop-mask').hide();
+        fileInput.files = e.dataTransfer.files;
+	};
+
+    var overArea = document.getElementById('box');
+    var dropMask = document.getElementById('drop-mask');
+
+	overArea.addEventListener('dragover', drag_over, false);
+	dropMask.addEventListener('dragleave', drag_leave, false);
+    dropMask.addEventListener('drop', drag_drop, false);
+</script>
+
+
+<style>
+#box {
+    width:400px;
+    height:200px;
+    border:10px dashed lightgray;
+    margin:0px;
+}
+
+#box.hover {
+    background:#eee;
+    border:10px dashed #F00;
+}
+
+#drop-mask {
+    position:absolute;
+    width:410px;
+    height:210px;
+    z-index:999999;
+    display:none;
+    margin:0px;
+}
+
+</style>
+{% endblock content %}

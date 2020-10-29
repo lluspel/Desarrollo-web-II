@@ -1,0 +1,20 @@
+{% extends "bootstrap/mybase_offline.html" %}
+
+{% block title %} Web Servidor {% endblock title %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{url_for('.static',filename='starter-template.css')}}">
+{% endblock styles %}
+
+{% block content %}
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Page not found</h1>
+        <p class="lead">Error code: 404</p>
+      </div>
+
+    </div><!-- /.container -->
+{% endblock content %}
+
